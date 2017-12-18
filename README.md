@@ -1,11 +1,11 @@
-# Serverless EBS Volume Backups/Snapshots using Lambda Functions
+# Serverless EBS Volume Snapshots using Lambda Functions
 Taking `EBS` snapshots is often a routine activity that is well suited to be automated using Lambda functions. So we are going to write a simple Boto3 script to trigger EBS Snapshots using AWS Lambda Functions
 
 In 3 simple steps, we are going to setup our serverless backup automation,
-- Step 1 - Setup Lambda Function - _Copy & Paste `code` given below_
+- **Step 1** - Setup Lambda Function - _Copy & Paste `code` given below_
   - _Optional - Manually you can test your Lambda Function_
-- Step 2 - Configure Lambda Triggers
-- Step 3 - Verify EBS Snapshots in DashboardConfigure Lambda Triggers
+- **Step 2** - Configure Lambda Triggers
+- **Step 3** - Verify EBS Snapshots in DashboardConfigure Lambda Triggers
 
 
 ![Fig 1 : Valaxy-Automated-Backup](https://raw.githubusercontent.com/miztiik/serverless-backup/master/images/Serverless-Backup.jpg)
