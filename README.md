@@ -7,8 +7,7 @@ In 3 simple steps, we are going to setup our serverless backup automation,
 - **Step 2** - Configure Lambda Triggers
 - **Step 3** - Verify EBS Snapshots in DashboardConfigure Lambda Triggers
 
-
-![Fig 1 : Valaxy-Automated-Backup](https://raw.githubusercontent.com/miztiik/serverless-backup/master/images/Serverless-Backup.jpg)
+![Fig : Valaxy-Automated-Backup](https://raw.githubusercontent.com/miztiik/serverless-backup/master/images/Serverless-Backup.jpg)
 
 We will need the following pre-requisites to successfully complete this activity,
 ## Pre-Requisities
