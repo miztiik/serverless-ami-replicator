@@ -41,5 +41,5 @@ def lambda_handler(event, context):
                                  'State':snapShot['State']
                                 }
                                )
-    # Return the status of the backups triggered to log
+    # Return the status of the snapshots triggered by lambda as list
     return backupStatus
