@@ -13,11 +13,18 @@ This is what our `AWS Lambda` function is going to do in one region,
 
 We will need the following pre-requisites to successfully complete this activity,
 ## Pre-Requisities
-- EC2 Server - with Tag "Key = Backup" _(Value can be null or anything)_
-- IAM Lambda Role - with `EC2 Service Role - EC2FullAccess Permissions'
+- EC2 Server(s) - with Tag "Key = Backup" _(Value can be null or anything)_
+- IAM Lambda Role - with `EC2 Service Role - EC2FullAccess Permissions`
 
-## Lambda Backup Code
-_Change the global variables at the top of the script to suit your needs.
+In 3 Simple steps, we are going to setup our serverless backup automation,
+- Step 1 - Lambda Backup Code
+  - _Optional - Manually you can test your Lambda Function_
+- Step 2 - Configure Lambda Triggers
+- Step 3 - Verify EBS Snapshots in DashboardConfigure Lambda Triggers
+
+
+## Step 1 - Lambda Backup Code
+_Change the global variables at the top of the script to suit your needs._
 ```py
 import boto3
 
@@ -66,7 +73,7 @@ def lambda_handler(event, context):
     return backupStatus
 ```
 
-## Configure Lambda Triggers
+## Step 2 - Configure Lambda Triggers
 We are going to use Cloudwatch Scheduled Events to take backup everyday.
 ```
 rate(1 minute)
@@ -76,6 +83,8 @@ or
 rate(1 day)
 ```
 Ref: [CloudWatch - Schedule Expressions for Rules](http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#RateExpressions)
+
+## Step 3 - Verify EBS Snapshots in Dashboard
 
 ## Customizations
 You can use many of the lamdba configurations to customize it suit your needs,
