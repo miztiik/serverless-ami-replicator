@@ -9,7 +9,7 @@ This is what our `AWS Lambda` function is going to do in one region,
 - Add Tags to Snapshots
 - Report Success
 
-![Fig 1 : Valaxy-Automated-Backup]()
+![Fig 1 : Valaxy-Automated-Backup](https://raw.githubusercontent.com/miztiik/serverless-backup/master/images/Serverless-Backup.png)
 
 We will need the following pre-requisites to successfully complete this activity,
 ## Pre-Requisities
