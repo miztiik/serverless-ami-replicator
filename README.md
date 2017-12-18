@@ -1,13 +1,12 @@
 # Serverless EBS Volume Backups/Snapshots using Lambda Functions
 Taking `EBS` snapshots is often a routine activity that is well suited to be automated using Lambda functions. So we are going to write a simple Boto3 script to trigger EBS Snapshots using AWS Lambda Functions
 
-This is what our `AWS Lambda` function is going to do in one region,
-- Find out `Instances` in the current `Region`
-  - Filter Instances based on `Tags` - In this case "**Backup** or "**backup**"
-- Find mapped block devices attached to those instances
-- Initiate Backup
-- Add Tags to Snapshots
-- Report Success
+In 3 Simple steps, we are going to setup our serverless backup automation,
+- Step 1 - Lambda Backup Code
+  - _Optional - Manually you can test your Lambda Function_
+- Step 2 - Configure Lambda Triggers
+- Step 3 - Verify EBS Snapshots in DashboardConfigure Lambda Triggers
+
 
 ![Fig 1 : Valaxy-Automated-Backup](https://raw.githubusercontent.com/miztiik/serverless-backup/master/images/Serverless-Backup.jpg)
 
@@ -16,14 +15,15 @@ We will need the following pre-requisites to successfully complete this activity
 - EC2 Server(s) - with Tag "Key = Backup" _(Value can be null or anything)_
 - IAM Lambda Role - with `EC2 Service Role - EC2FullAccess Permissions`
 
-In 3 Simple steps, we are going to setup our serverless backup automation,
-- Step 1 - Lambda Backup Code
-  - _Optional - Manually you can test your Lambda Function_
-- Step 2 - Configure Lambda Triggers
-- Step 3 - Verify EBS Snapshots in DashboardConfigure Lambda Triggers
-
 
 ## Step 1 - Lambda Backup Code
+This is what our `AWS Lambda` function is going to do in one region,
+- Find out `Instances` in the current `Region`
+  - Filter Instances based on `Tags` - In this case "**Backup** or "**backup**"
+- Find mapped block devices attached to those instances
+- Initiate Backup
+- Add Tags to Snapshots
+- Report Success
 _Change the global variables at the top of the script to suit your needs._
 ```py
 import boto3
