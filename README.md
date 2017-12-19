@@ -12,7 +12,7 @@ In 3 simple steps, we are going to setup our serverless backup automation,
 We will need the following pre-requisites to successfully complete this activity,
 ## Pre-Requisities
 - EC2 Server(s) - with Tag "Key = Backup" _(Value can be null or anything)_
-- IAM Lambda Role - _i.e_ `Lambda Service Role` - _with_ `EC2FullAccess` _permissions_
+- IAM Role - _i.e_ `Lambda Service Role` - _with_ `EC2FullAccess` _permissions_
 
 
 ## Step 1 - Lambda Backup Code
