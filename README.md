@@ -1,13 +1,14 @@
-# Serverless EBS Volume Snapshots using Lambda Functions
-Taking `EBS` snapshots is often a routine activity that is well suited to be automated using Lambda functions. So we are going to write a simple Boto3 script to trigger EBS Snapshots using AWS Lambda Functions
+# Serverless EBS Volume Tag Enforcer
+Creating `EBS Volumes` is easy, But maintaining them is hard. Especially when there are no `Tags` to describe their purpose. To make our jobs easier, we will automate the clean up action with AWS Lambda Functions.
+Our Boto Script will do the following actions,
+ and Delete the ones without any tags or the explicit
+- **Step 1** - Scan for `EBS Volumes` in `Available` State
+- **Step 2** - Exclude the Volumes with the `Pre-Approved` Tags
+- **Step 3** - Delete all other EBS Volumes which are
+  - **Step 3a** - Without any `Tags`
+  - **Step 3b** - With `Tags` that are not 'Pre-Approved`
 
-In 3 simple steps, we are going to setup our serverless backup automation,
-- **Step 1** - Setup Lambda Function - _Copy & Paste `code` given below_
-  - _Optional - Manually you can test your Lambda Function_
-- **Step 2** - Configure Lambda Triggers - Cloudwatch Events
-- **Step 3** - Verify EBS Snapshots in `EC2 Dashboard`
-
-![Fig : Valaxy-Automated-Backup](https://raw.githubusercontent.com/miztiik/serverless-backup/master/images/Serverless-Backup.jpg)
+![Fig : Valaxy-Automated-CleanUp](https://raw.githubusercontent.com/miztiik/serverless-backup/master/images/Serverless-Backup.jpg)
 
 We will need the following pre-requisites to successfully complete this activity,
 ## Pre-Requisities
@@ -15,14 +16,9 @@ We will need the following pre-requisites to successfully complete this activity
 - IAM Role - _i.e_ `Lambda Service Role` - _with_ `EC2FullAccess` _permissions_
 
 
-## Step 1 - Lambda Backup Code
+## Step 1 - Lambda Penny Pincher Code
 This is what our `AWS Lambda` function is going to do in one region,
-- Find out `Instances` in the current `Region`
-  - Filter Instances based on `Tags` - In this case "**Backup** or "**backup**"
-- Find mapped block devices attached to those instances
-- Initiate Backup
-- Add Tags to Snapshots
-- Report Success
+
 _Change the global variables at the top of the script to suit your needs._
 ```py
 import boto3
@@ -32,44 +28,49 @@ globalVars  = {}
 globalVars['Owner']                 = "Miztiik"
 globalVars['Environment']           = "Test"
 globalVars['REGION_NAME']           = "ap-south-1"
-globalVars['tagName']               = "Valaxy-Serverless-Automated-Backup"
-globalVars['findNeedle']            = ["backup", "Backup"]
+globalVars['tagName']               = "Valaxy-Serverless-EBS-Penny-Pincher"
+globalVars['findNeedle']            = "Name"
+globalVars['tagsToExclude']         = "Do-Not-Delete"
 
-ec2Client = boto3.client('ec2')
-
+ec2       = boto3.resource('ec2', region_name = globalVars['REGION_NAME'] )
 
 def lambda_handler(event, context):
-    reservations = ec2Client.describe_instances( Filters=[ {'Name': 'tag-key', 'Values': globalVars['findNeedle'] }] ).get('Reservations', [] )
 
-    print "Found {0} instances that need backing up".format( len(reservations) )
+    deletedVolumes=[]
 
-    instances = sum([[i for i in r['Instances']] for r in reservations], [])
+    # Get all the volumes in the region
+    for vol in ec2.volumes.all():
+        if  vol.state=='available':
 
-    backupStatus=[]
-    for instance in instances:
-        for dev in instance['BlockDeviceMappings']:
-            if dev.get('Ebs', None) is None:
+            # Check for Tags
+            if vol.tags is None:
+                vid=vol.id
+                v=ec2.Volume(vol.id)
+                v.delete()
+
+                deletedVolumes.append({'VolumeId': vol.id,'Status':'Delete Initiated'})
+                print "Deleted Volume: {0} for not having Tags".format( vid )
+
                 continue
-            vol_id = dev['Ebs']['VolumeId']
 
-            print 'Found EBS volume {0} on instance {1}'.format( vol_id, instance['InstanceId'])
+            # Find Value for Tag with Key as "Name"
+            for tag in vol.tags:
+                if tag['Key'] == globalVars['findNeedle']:
+                  value=tag['Value']
+                  if value != globalVars['tagsToExclude'] and vol.state == 'available' :
+                    vid = vol.id
+                    v = ec2.Volume(vol.id)
+                    v.delete()
+                    deletedVolumes.append( {'VolumeId': vol.id,'Status':'Delete Initiated'} )
+                    print "Deleted Volume: {0} for not having Tags".format( vid )
 
-            snapShot = ec2Client.create_snapshot( VolumeId=vol_id )
+    # If no Volumes are deleted, to return consistent json output
+    if not deletedVolumes:
+        deletedVolumes.append({'VolumeId':None,'Status':None})
 
-            # Add tags to the snapshot
-            ec2Client.create_tags(Resources=[snapShot['SnapshotId'], ],
-                                  Tags=[{'Key': 'Name', 'Value': globalVars['tagName']}, ]
-                                  )
+    # Return the list of status of the snapshots triggered by lambda as list
+    return deletedVolumes
 
-            # Append to backup status update list
-            backupStatus.append({'InstanceId':instance['InstanceId'],
-                                 'VolumeId': vol_id,
-                                 'SnapshotId':snapShot['SnapshotId'],
-                                 'State':snapShot['State']
-                                }
-                               )
-    # Return the status of the backups triggered to log
-    return backupStatus
 ```
 
 ## Step 2 - Configure Lambda Triggers
