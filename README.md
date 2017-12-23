@@ -2,11 +2,11 @@
 Creating `EBS Volumes` is easy, But maintaining them is hard. Especially when there are no `Tags` to describe their purpose. To make our jobs easier, we will automate the clean up action with AWS Lambda Functions.
 Our Boto Script will do the following actions,
  and Delete the ones without any tags or the explicit
-- **Step 1** - Scan for `EBS Volumes` in `Available` State
-- **Step 2** - Exclude the Volumes with the `Pre-Approved` Tags
-- **Step 3** - Delete all other EBS Volumes which are
-  - **Step 3a** - Without any `Tags`
-  - **Step 3b** - With `Tags` that are not 'Pre-Approved`
+1. Scan for `EBS Volumes` in `Available` State
+1. Exclude the Volumes with the `Pre-Approved` Tags
+1. Delete all other EBS Volumes which are,
+   1. Without any `Tags`
+   1. With `Tags` that are not 'Pre-Approved`
 
 ![Fig : Valaxy-Automated-CleanUp](https://raw.githubusercontent.com/miztiik/serverless-ebs-penny-pincher/master/images/serverless-ebs-penny-pincher.png)
 
@@ -16,6 +16,7 @@ We will need the following pre-requisites to successfully complete this activity
 - EC2 Server(s) - with Tag "Key = Backup" _(Value can be null or anything)_
 - IAM Role - _i.e_ `Lambda Service Role` - _with_ `EC2FullAccess` _permissions_
 
+_The above image shows the execution order, that should not be confused with the numbering of steps given here_
 
 ## Step 1 - Lambda Penny Pincher Code
 This is what our `AWS Lambda` function is going to do in one region,
