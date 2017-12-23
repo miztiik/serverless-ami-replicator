@@ -8,7 +8,8 @@ Our Boto Script will do the following actions,
   - **Step 3a** - Without any `Tags`
   - **Step 3b** - With `Tags` that are not 'Pre-Approved`
 
-![Fig : Valaxy-Automated-CleanUp](https://raw.githubusercontent.com/miztiik/serverless-ebs-penny-pincher/master/images/serverless-ebs-penny-pincher.jpg)
+![Fig : Valaxy-Automated-CleanUp](https://raw.githubusercontent.com/miztiik/serverless-ebs-penny-pincher/master/images/serverless-ebs-penny-pincher.png)
+
 
 We will need the following pre-requisites to successfully complete this activity,
 ## Pre-Requisities
