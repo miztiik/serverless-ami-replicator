@@ -1,4 +1,4 @@
-# Serverless EBS Volume Tag Enforcer
+# Serverless EBS Volume Tag Enforcer | Penny Pincher
 Creating `EBS Volumes` is easy, But maintaining them is hard. Especially when there are no `Tags` to describe their purpose. To make our jobs easier, we will automate the clean up action with AWS Lambda Functions.
 Our Boto Script will do the following actions,
  and Delete the ones without any tags or the explicit
