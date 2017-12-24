@@ -12,7 +12,7 @@ Our Boto Script will do the following actions,
 
 ## Pre-Requisities
 We will need the following pre-requisites to successfully complete this activity,
-- EC2 Server(s) - with Tag "Key = Backup" _(Value can be null or anything)_
+- Few EBS Volume(s) - with _at least_ one volume having Tag "Key = Name" "Value:Do-Not-Delete" and another volume without tags in `Available` State
 - IAM Role - _i.e_ `Lambda Service Role` - _with_ `EC2FullAccess` _permissions_
 
 _The image above shows the execution order, that should not be confused with the numbering of steps given here_
