@@ -21,23 +21,22 @@ globalVars['awsAccountId']          = boto3.client('sts').get_caller_identity()[
 
 def copy_latest_image():
     images = srcEC2Resource.images.filter(Owners=[ globalVars['awsAccountId'] ]) # Specify your AWS account owner id in place of "XXXXX" at all the places in this script
-    
-    retention_days = int(globalVars['amiRetentionDays'])
-    
+       
     to_tag = collections.defaultdict(list)
     
     for image in images:
         image_date = parser.parse(image.creation_date)
         
-        # Copy todays images
+        # Copy ONLY today's images
         if image_date.date() == (datetime.datetime.today()).date(): 
         
         #To Copy previous day images
         #if image_date.date() == (datetime.datetime.today()-datetime.timedelta(1)).date(): 
                     
-            if not dest_image_client.describe_images(Owners=[ globalVars['awsAccountId'] ],Filters=[{'Name':'name', 'Values':[image.name]}])['Images']:
+            if not destEC2Client.describe_images(Owners=[ globalVars['awsAccountId'] ], Filters=[{'Name':'name', 'Values':[image.name]}])['Images']:
             
                 print "Copying Image {name} - {id} to Virginia".format(name=image.name,id=image.id)
+                
                 new_ami = destEC2Client.copy_image(
                     DryRun=False,
                     SourceRegion=globalVars['SourceRegionName'],
@@ -61,7 +60,7 @@ def copy_latest_image():
                     print "Will delete %d AMIs on %s" % (len(to_tag[globalVars['amiRetentionDays']]), delete_fmt)
                     
                     #To create a tag to an AMI when it can be deleted after retention period expires
-                    dest_image_client.create_tags(
+                    destEC2Client.create_tags(
                         Resources=to_tag[globalVars['amiRetentionDays']],
                         Tags=[
                             {'Key': 'DeleteOnCopy', 'Value': delete_fmt},
