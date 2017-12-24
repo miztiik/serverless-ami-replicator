@@ -13,7 +13,7 @@ Our Boto Script will do the following actions,
 ## Pre-Requisities
 We will need the following pre-requisites to successfully complete this activity,
 - Few EBS Volume(s) in `Available` State:
-  - _At least_ one Volume having Tag "Key = Name" "Value:Do-Not-Delete"
+  - _At least_ one Volume having Tag "Key:Name" "Value:Do-Not-Delete"
   - Another Volume without any tags 
 - IAM Role - _i.e_ `Lambda Service Role` - _with_ `EC2FullAccess` _permissions_
 
