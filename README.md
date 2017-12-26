@@ -10,7 +10,7 @@ Our `Image Replication Bot` will do the following actions,
 1. Repeat `Step 2` for other `Destination Regions`
 1. Return status of images of copied
 
-![Fig : Valaxy-Automated-CleanUp](https://raw.githubusercontent.com/miztiik/serverless-ebs-penny-pincher/master/images/serverless-ebs-penny-pincher.png)
+![Fig : Valaxy-Automated-Image-Replicator](https://raw.githubusercontent.com/miztiik/serverless-ami-replicator/master/images/Serverless-AMI-Replicator.jpg)
 
 ## Pre-Requisities
 We will need the following pre-requisites to successfully complete this activity,
