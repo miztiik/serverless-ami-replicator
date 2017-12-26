@@ -21,8 +21,8 @@ We will need the following pre-requisites to successfully complete this activity
 
 _The image above shows the execution order, that should not be confused with the numbering of steps given here_
 
-## Step 1 - Lambda Penny Pincher Code
-This is what our `AWS Lambda` function is going to do in one region,
+## Step 1 - AWS Lambda AMI Replicator Bot Code
+The below script is written in `Python 2.7`. Remember to choose the same in AWS Lambda Functions.
 
 _Change the global variables at the top of the script to suit your needs._
 ```py
@@ -132,7 +132,7 @@ cron(0 12 * * ? *)
 ```
 _If you want to learn more about the above Scheduled expressions,_ Ref: [CloudWatch - Schedule Expressions for Rules](http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#RateExpressions)
 
-## Step 3 - Verify EBS Snapshots in Dashboard
+## Step 3 - Verify AMI Images in `Destination Region` in AWS Dashboard
 
 ## Customizations
 You can use many of the lamdba configurations to customize it suit your needs,
