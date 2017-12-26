@@ -14,7 +14,7 @@ Our `Image Replication Bot` will do the following actions,
 
 ## Pre-Requisities
 We will need the following pre-requisites to successfully complete this activity,
-- An AMI Created today, Preferablly in `ap-south-` Region,
+- An AMI Created today, Preferablly in `ap-south-1` Region,
   - _If you choose to change the regions, be sure to update the global variables in the below code_
 - IAM Role - _i.e_ `Lambda Service Role` - _with_ `EC2FullAccess` _permissions_
 
