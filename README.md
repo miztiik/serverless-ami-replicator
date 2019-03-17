@@ -1,6 +1,7 @@
 # Serverless Amazon Machine Image(AMI) Replicator | Copy AMI to DR Region
-We all create `Golden Images` all the time. But pushing the latest hardened images to end users had always been difficult and time consuming.
-With the help of AWS Lambda Functions we can accomplish in a truly automated way
+We all create `Golden Images` all the time. But pushing the latest hardened images to end users had always been difficult and time consuming. With the help of AWS Lambda Functions we can accomplish in a truly automated way
+
+#### Follow this article in [Youtube](https://www.youtube.com/watch?v=iujwfIPoEiM&list=PLxzKY3wu0_FKok5gI1v4g4S-g-PLaW9YD&index=6&t=0s)
 
 Our `Image Replication Bot` will do the following actions,
 1. Identify the Image/AMI built on current day in `Source Region`
